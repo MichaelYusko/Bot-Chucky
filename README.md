@@ -35,10 +35,6 @@ from bot_chucky.bot import BotChucky
 from bot_chucky.utils import get_sender_id, get_user_text
 
 token = 'YOUR_FACEBOOK_PAGE_TOKEN'
-consumer_key = 'YOUR_TWITTER_CONSUMER_KEY'
-consumer_secret = 'YOUR_TWITTER_CONSUMER_SECRET'
-access_token_key = 'YOUR_TWITTER_ACCESS_TOKEN_KEY'
-access_token_secret = 'YOUR_TWITTER_ACCESS_TOKEN_SECRET'
 
 # Init a Flask app
 app = Flask(__name__)
@@ -49,10 +45,10 @@ app = Flask(__name__)
 bot = BotChucky(
     token,
     open_weather_token='YOUR_OPEN_WEATHER_TOKEN',
-    consumer_key = 'YOUR_TWITTER_CONSUMER_KEY'
-    consumer_secret = 'YOUR_TWITTER_CONSUMER_SECRET'
-    access_token_key = 'YOUR_TWITTER_ACCESS_TOKEN_KEY'
-    access_token_secret = 'YOUR_TWITTER_ACCESS_TOKEN_SECRET'
+    tw_consumer_key = 'YOUR_TWITTER_CONSUMER_KEY'
+    tw_consumer_secret = 'YOUR_TWITTER_CONSUMER_SECRET'
+    tw_access_token_key = 'YOUR_TWITTER_ACCESS_TOKEN_KEY'
+    tw_access_token_secret = 'YOUR_TWITTER_ACCESS_TOKEN_SECRET'
 )
 
 
