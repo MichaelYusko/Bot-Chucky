@@ -1,7 +1,7 @@
 import requests as r
 
 from .constants import API_URL
-from .exc import BotChuckyInvalidToken, BotChuckyTokenError
+from .errors import BotChuckyInvalidToken, BotChuckyTokenError
 from .helpers import FacebookData, TwitterData, WeatherData
 
 
@@ -35,13 +35,13 @@ class BotChucky:
         }
         self.twitter = TwitterData(self.twitter_tokens)
 
-    def send_message(self, _id, text):
+    def send_message(self, id_: str, text):
         """
-        :param _id: User facebook id, type -> str
+        :param  id_: User facebook id, type -> str
         :param text: some text, type -> str
         """
         data = {
-            'recipient': {'id': _id},
+            'recipient': {'id': id_},
             'message': {'text': text}
         }
         message = r.post(API_URL, params=self.params,
@@ -49,12 +49,11 @@ class BotChucky:
         if message.status_code is not 200:
             return message.text
 
-    def send_weather_message(self, _id, city_name):
+    def send_weather_message(self, id_: str, city_name: str):
         """
-        :param _id: User facebook id, type -> str
+        :param id_: User facebook id, type -> str
         :param city_name: Find weather by city name
-        :return send_message function,
-         send message to a user, with current weather
+        :return send_message function, send message to a user, with current weather
         """
         if self.open_weather_token is None:
             raise BotChuckyTokenError('Open Weather')
@@ -69,13 +68,13 @@ class BotChucky:
                   f'about weather in {city_name}, ' \
                   f'please check your name of city'
 
-            return self.send_message(_id, msg)
+            return self.send_message(id_, msg)
 
         description = weather_info['weather'][0]['description']
         msg = f'Current weather in {city_name} is: {description}'
-        return self.send_message(_id, msg)
+        return self.send_message(id_, msg)
 
-    def send_tweet(self, status):
+    def send_tweet(self, status: str):
         """
         :param status: Tweet text, type -> str
         """

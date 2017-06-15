@@ -1,5 +1,7 @@
 """ Helper classes """
 
+from urllib import parse
+
 import facebook
 import requests as r
 import twitter
@@ -109,3 +111,16 @@ class TwitterData:
                 'detail': TWE.message[0]['message'],
                 'success': False
             }
+
+
+class StackExchangeData:
+    """
+    Class which collect StackExchange data
+    """
+    def get_stack_answer_by(self, **kwargs):
+        params = None
+        if len(kwargs) > 1:
+            pass
+        for key in kwargs.keys():
+            params = parse.quote_plus(kwargs.get(key))
+        return params

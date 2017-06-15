@@ -1,7 +1,7 @@
 """ Utils functions"""
 
 
-def get_sender_id(data):
+def get_sender_id(data: dict) -> str:
     """
     :param data: receives facebook object
     :return: User id which wrote a message, type -> str
@@ -10,7 +10,7 @@ def get_sender_id(data):
     return sender_id
 
 
-def get_user_text(data):
+def get_user_text(data: dict) -> str:
     """
     :param data: receives facebook object
     :return: User text, type -> str
