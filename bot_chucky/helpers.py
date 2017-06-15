@@ -6,6 +6,8 @@ import facebook
 import requests as r
 import twitter
 
+from bot_chucky.errors import BotChuckyError
+
 
 class FacebookData:
     def __init__(self, token):
@@ -117,10 +119,37 @@ class StackExchangeData:
     """
     Class which collect StackExchange data
     """
+    _default_parameters = {
+        'order': 'desc',
+        'sort': 'activity',
+        'site': 'stackoverflow',
+    }
+
     def get_stack_answer_by(self, **kwargs):
-        params = None
+        """
+        :param kwargs: create a query by arguments
+                       for example:
+                            tag='Python', will be search by tag
+                            title='Update Python', will be search by title
+                            and etc.
+
+        :return: an array with links
+        """
         if len(kwargs) > 1:
-            pass
+            raise BotChuckyError('The argument must be one')
+
         for key in kwargs.keys():
-            params = parse.quote_plus(kwargs.get(key))
-        return params
+            query = kwargs.get(key)
+            self._default_parameters.update({key: query})
+
+            if not isinstance(query, str):
+                raise TypeError(f'{query} must be a string')
+
+        encode_query = parse.urlencode(self._default_parameters)
+
+        stack_url = f'https://api.stackexchange.com/2.2/search/advanced?' \
+                    f'{encode_query}'
+
+        questions = r.get(stack_url).json()
+        links = [obj['link'] for obj in questions['items']]
+        return links

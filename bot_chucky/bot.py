@@ -2,7 +2,7 @@ import requests as r
 
 from .constants import API_URL
 from .errors import BotChuckyInvalidToken, BotChuckyTokenError
-from .helpers import FacebookData, TwitterData, WeatherData
+from .helpers import FacebookData, StackExchangeData, TwitterData, WeatherData
 
 
 class BotChucky:
@@ -20,6 +20,7 @@ class BotChucky:
         :param fb: Instace of FacebookData class, default
         :param weather: Instace of WeatherData class, default
         :param twitter: Instance of TwitterData class, default
+        :param stack: Instance of StackExchange class, not required
         """
         self.token = token
         self.open_weather_token = open_weather_token
@@ -34,6 +35,7 @@ class BotChucky:
             'access_token_secret': tw_access_token_secret
         }
         self.twitter = TwitterData(self.twitter_tokens)
+        self.stack = StackExchangeData()
 
     def send_message(self, id_: str, text):
         """
@@ -105,3 +107,27 @@ class BotChucky:
 
         if reply['success']:
             return reply['tweets']
+
+    def send_stack_questions(self, id_, **kwargs):
+        """
+        :param id_: a User id
+        :param kwargs: find by title='Update Django'
+                               tag='Django'
+        :return: send_message function, send message to a user with questions
+        """
+        msg = 'I can\'t find questions for you;( try again'
+        answers = self.stack.get_stack_answer_by(**kwargs)
+
+        if answers:
+            if len(answers) > 2:
+                msg = f'I found questions for you, links below\n\n ' \
+                      f'Question 1: {answers[0]}\n' \
+                      f'Question 2: {answers[1]}'
+                return self.send_message(id_, msg)
+
+            if len(answers) == 1:
+                msg = f'I found question for you, link below\n\n ' \
+                      f'Question: {answers[0]}'
+                return self.send_message(id_, msg)
+        else:
+            return self.send_message(id_, msg)

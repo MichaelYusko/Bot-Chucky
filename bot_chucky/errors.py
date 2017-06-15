@@ -15,3 +15,11 @@ class BotChuckyTokenError(Exception):
 
 class BotChuckyInvalidToken(Exception):
     pass
+
+
+class BotChuckyError(Exception):
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        return self.msg
