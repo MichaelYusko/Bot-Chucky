@@ -1,6 +1,6 @@
 # Bot-Chucky
 
-Python bot which able to work with messenger of facebook
+Python3.6+ bot which able to work with messenger of facebook
 
 [![Build Status](https://travis-ci.org/MichaelYusko/Bot-Chucky.svg?branch=master)](https://travis-ci.org/MichaelYusko/Bot-Chucky)
 [![PyPI version](https://badge.fury.io/py/bot_chucky.svg)](https://badge.fury.io/py/bot_chucky)
@@ -73,7 +73,7 @@ def handle_messages():
                     text = get_user_text(data)
                     
                     # Send message with weather information to the user
-                    bot.send_message(sender_id, city)
+                    bot.send_message(sender_id, text)
                     
                     # Send weather information
                     # Where 'text' is name of city
