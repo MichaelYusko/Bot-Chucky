@@ -80,3 +80,32 @@ class TwitterData:
                     'detail': TWE.message[0]['message'],
                     'success': False
                 }
+
+        return {
+            'success': False,
+            'detail': 'Status text is empty.'
+        }
+
+    def get_home_tweets(self):
+        try:
+            return {
+                'success': True,
+                'tweets': self.api.GetHomeTimeline()
+            }
+        except twitter.error.TwitterError as TWE:
+            return {
+                'detail': TWE.message[0]['message'],
+                'success': False
+            }
+
+    def get_user_tweets(self, screen_name):
+        try:
+            return {
+                'success': True,
+                'tweets': self.api.GetUserTimeline(screen_name=screen_name)
+            }
+        except twitter.error.TwitterError as TWE:
+            return {
+                'detail': TWE.message[0]['message'],
+                'success': False
+            }

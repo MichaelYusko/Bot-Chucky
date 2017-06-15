@@ -88,3 +88,21 @@ class BotChucky:
             return f'I have placed your tweet with status \'{status}\'.'
 
         return f'Twitter Error: {reply["detail"]}.'
+
+    def get_home_tweets(self):
+        """
+        Get most recent tweets and retweets from the user and users they follow.
+        """
+        reply = self.twitter.get_home_tweets()
+
+        if reply['success']:
+            return reply['tweets']
+
+    def get_user_tweets(self, screen_name=None):
+        """
+        :param screen_name: Twitter screen name, type -> str
+        """
+        reply = self.twitter.get_user_tweets(screen_name)
+
+        if reply['success']:
+            return reply['tweets']
