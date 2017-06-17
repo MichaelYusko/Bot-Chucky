@@ -24,6 +24,7 @@ Chucky provide the next thigs:
 
  * Send message
  * Send weather information
+ * Send tweets
  
 the list will be expanded.
 
@@ -41,7 +42,14 @@ app = Flask(__name__)
 # Create an instance of Chucky object
 # If you want to send weather information
 # You need to set your Open Weather API key
-bot = BotChucky(token, open_weather_token='YOUR_OPEN_WEATHER_TOKEN')
+bot = BotChucky(
+    token,
+    open_weather_token='YOUR_OPEN_WEATHER_TOKEN',
+    tw_consumer_key = 'YOUR_TWITTER_CONSUMER_KEY'
+    tw_consumer_secret = 'YOUR_TWITTER_CONSUMER_SECRET'
+    tw_access_token_key = 'YOUR_TWITTER_ACCESS_TOKEN_KEY'
+    tw_access_token_secret = 'YOUR_TWITTER_ACCESS_TOKEN_SECRET'
+)
 
 
 @app.route('/', methods=['GET'])
@@ -75,6 +83,13 @@ def handle_messages():
                     pass
                 
     return 'ok', 200
+
+
+@app.route('/tweet', methods=['POST'])
+def send_tweet():
+    data = request.json
+    if data['status']:
+        return (bot.send_tweet(data['status']), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
