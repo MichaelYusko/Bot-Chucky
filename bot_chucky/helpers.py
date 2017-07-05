@@ -196,7 +196,7 @@ class NewsData:
             'entnt': 'entertainment',
             'gmg': 'gaming',
             'gnrl': 'general',
-            'musin': 'music',
+            'music': 'music',
             'pltcs': 'politics',
             'scntr': 'science-and-nature',
             'sport': 'sport',
@@ -209,10 +209,10 @@ class NewsData:
             'in': 'India',
             'us': 'United States of America',
         }
-        self.language = {
+        self.languages = {
             'en': 'English',
             'de': 'German',
-            'fr': 'frence',
+            'fr': 'French',
         }
 
     def get_categories(self):
@@ -289,7 +289,7 @@ class NewsData:
             country = ''
 
         url = f'{NEWS_URL}sources?{category}{language}{country}'
-        print(url)
+
         data = r.get(url).json()
 
         if len(data['sources']) == 0:

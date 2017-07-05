@@ -17,6 +17,7 @@ If you want test your application on  a local machine
  * [Install ngrok](https://ngrok.com/download) - will enable an `HTTPS` route for you
  * [Open Weather Map](https://openweathermap.org/api) - create a `TOKEN`, then you will be able to send weather information to a user
  * [Create facebook messenger app](https://developers.facebook.com)
+ * [Get Newsapi Key](https://newsapi.org) - Get an api key, to be able to send news information.
 
 
 Usage
@@ -40,6 +41,11 @@ Chucky provides:
     ![tweets](https://user-images.githubusercontent.com/13191999/27773421-fb2525e0-5f81-11e7-9854-384effdf9ce4.png)
     ![tweets](https://user-images.githubusercontent.com/13191999/27773423-fc0e8604-5f81-11e7-8690-25a66ee87511.png)
  * Search SoundCloud, based on artist
+ * Send news articles and list of sources
+
+
+    ![sources_list](https://user-images.githubusercontent.com/15676805/27868476-6ab124b0-61ba-11e7-9f3e-a925e9ec6671.jpg)
+    ![articles](https://user-images.githubusercontent.com/15676805/27868483-6f273336-61ba-11e7-8cc5-4173709a50ab.jpg)  
 
 the list will be expanded.
 
