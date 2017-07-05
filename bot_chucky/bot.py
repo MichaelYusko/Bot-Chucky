@@ -191,9 +191,11 @@ class BotChucky:
         data = self.news.get_article(source, count, order)
 
         for article in data:
-            message = f"\nBy {article['author']}\nTitle:{article['title']}\n"
-            message += f"Desc: {article['description']}\nRead more: {article['url']}"
-            self.send_message(id_, message[:min(len(message), 600)])
+            message = f"\nBy {article['author']}\n"
+            message += f"Title:{article['title']}\n"
+            message += f"Desc: {article['description']}\n"
+            message += f"Read more: {article['url']}"
+            self.send_message(id_, message)
 
     def get_sources_list(self, id_: str,
                          count,
