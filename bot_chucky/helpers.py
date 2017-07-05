@@ -265,25 +265,25 @@ class NewsData:
         to the params given
         """
         from .constants import NEWS_URL
-        if (category is not None and category not in ['bsns', 'entnt', 'gmg',
-                                                      'gnrl', 'music', 'pltcs',
-                                                      'scntr', 'sport', 'tech']):
+        if category is not None and category not in ['bsns', 'entnt', 'gmg',
+                                                     'gnrl', 'music', 'pltcs',
+                                                     'scntr', 'sport', 'tech']:
             raise BotChuckyError(f'Invalid category, choose from {self.categories}')
-        elif (category is not None):
+        elif category is not None:
             category = f'category={self.categories[category]}'
         else:
             category = ''
 
-        if (language is not None and language not in ['en', 'de', 'fr']):
+        if language is not None and language not in ['en', 'de', 'fr']:
             raise BotChuckyError(f'Invalid language, choose from {self.languages}')
-        elif (language is not None):
+        elif language is not None:
             language = f'&language={language}'
         else:
             language = ''
 
-        if (country is not None and country not in ['au', 'de', 'gb', 'in', 'us']):
+        if country is not None and country not in ['au', 'de', 'gb', 'in', 'us']:
             raise BotChuckyError(f'Invalid country, choose from {self.countries}')
-        elif (country is not None):
+        elif country is not None:
             country = f'&country={country}'
         else:
             country = ''
@@ -292,8 +292,9 @@ class NewsData:
         print(url)
         data = r.get(url).json()
 
-        if(len(data['sources']) == 0):
+        if len(data['sources']) == 0:
             raise ValueError('Query doesn\'t match')
+
         count = min(count, len(data['sources']))
 
         return data['sources'][: count]

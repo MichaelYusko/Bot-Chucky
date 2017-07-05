@@ -51,14 +51,14 @@ def handle_messages():
                     # Send List of News Sources
                     # Command : news list
                     """
-                    if(text[:9].lower() == 'news list'):
+                    if text[:9].lower() == 'news list':
                         bot.get_sources_list(sender_id, count=10, country="in")
 
                     """
                     # Send 5 latest news articles from source
                     # Command : news the-hindu
                     """
-                    if(text[:4].lower() == 'news'):
+                    if text[:4].lower() == 'news':
                         source = text[5:]
                         bot.get_article(sender_id, source, 5)
 

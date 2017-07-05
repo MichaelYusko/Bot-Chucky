@@ -183,17 +183,20 @@ class BotChucky:
         :param: count: Number of articles to be sent
         :order: latest, top, or popular
         """
-        if(self.news.get_key() is None):
+        if self.news.get_key() is None:
             raise BotChuckyTokenError("Articles are available only with the newsapi.org key")
 
-        data = self.news.get_article(source, min(count, 10), order)
+        count = min(count, 10)
+
+        data = self.news.get_article(source, count, order)
 
         for article in data:
             message = f"\nBy {article['author']}\nTitle:{article['title']}\n"
             message += f"Desc: {article['description']}\nRead more: {article['url']}"
-            print(self.send_message(id_, message[:min(len(message), 600)]))
+            self.send_message(id_, message[:min(len(message), 600)])
 
-    def get_sources_list(self, id_: str, count,
+    def get_sources_list(self, id_: str,
+                         count,
                          category=None,
                          language=None,
                          country=None):
@@ -204,7 +207,9 @@ class BotChucky:
         :language: Understandable -> en, de or fr
         :country: Country in which the source belongs
         """
-        data = self.news.get_sources(min(count, 20), category, language, country)
+        count = min(count, 20)
+
+        data = self.news.get_sources(count, category, language, country)
 
         message = "Codes for sources:\n"
 
