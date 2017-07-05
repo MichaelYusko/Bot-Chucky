@@ -1,5 +1,4 @@
 import requests as r
-import time
 from .constants import API_URL
 from .errors import BotChuckyInvalidToken, BotChuckyTokenError
 from .helpers import (FacebookData, SoundCloudData,
@@ -175,8 +174,8 @@ class BotChucky:
                 return self.send_message(id_, msg)
         else:
             return self.send_message(id_, msg)
-	
-    def get_article(self, id_:str, source, count, order=None):
+
+    def get_article(self, id_: str, source, count, order=None):
         """
         ## This function gets #count articles from 'source' sorted by 'order'
         :param id_: facebook user id
@@ -185,17 +184,19 @@ class BotChucky:
         :order: latest, top, or popular
         """
         if(self.news.get_key() is None):
-            raise BotChuckyError("Articles are available only with the newsapi.org key")
-            
+            raise BotChuckyTokenError("Articles are available only with the newsapi.org key")
+
         data = self.news.get_article(source, min(count, 10), order)
-        
+
         for article in data:
             message = f"\nBy {article['author']}\nTitle:{article['title']}\n"
             message += f"Desc: {article['description']}\nRead more: {article['url']}"
             print(self.send_message(id_, message[:min(len(message), 600)]))
-        
-    
-    def get_sources_list(self, id_:str, count, category=None, language=None, country=None):
+
+    def get_sources_list(self, id_: str, count, 
+                         category=None, 
+                         language=None, 
+                         country=None):
         """
         :param id_: facebook user id
         :param count: # of sources user wants to list
@@ -204,12 +205,10 @@ class BotChucky:
         :country: Country in which the source belongs
         """
         data = self.news.get_sources(min(count, 20), category, language, country)
-        
+
         message = "Codes for sources:\n"
-        
+
         for i in range(len(data)):
             message += f"{i+1}. {data[i]['id']}: {data[i]['name']}\n"
-        
+
         self.send_message(id_, message)
-    
-		
