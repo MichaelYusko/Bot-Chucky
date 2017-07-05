@@ -182,6 +182,130 @@ class SoundCloudData:
                 }
 
 
+			
+class NewsData:
+    """
+    Class to gather News from sources
+    """
+    def __init__(self, key):
+        """
+        key: the newsapi.org's api key
+        """
+        self.key = key
+        self.categories = {
+            'bsns':"business",
+            'entnt':'entertainment',
+            'gmg':'gaming',
+            'gnrl':'general',
+            'musin':'music',
+            'pltcs':'politics',
+            'scntr':'science-and-nature',
+            'sport':'sport',
+            'tech':'technology',
+        }
+        self.countries = {
+            'au':'Australia',
+            'de':'Germany',
+            'gb':'United Kingdom',
+            'in':'India',
+            'us':'United States of America',
+        }
+        
+        self.language = {
+            'en':'English',
+            'de':'German',
+            'fr':'frence',
+        }
+        
+        
+    def get_categories(self):
+        """
+        Returns the mapping between categories codes and their meaning
+        """
+        return self.categories
+    
+    def get_countries(self):
+        """
+        Returns the mapping between country codes and their names
+        """
+        return self.countries
+    
+    def get_languages(self):
+        """
+        Returns the mapping between languages and their codes
+        """
+        return self.languages
+
+    def get_key(self):
+        """
+        Returns the api key of this object
+        """
+        return self.key
+    
+        
+    def get_article(self, source, count, order=None):
+        """
+        Fetches 'count' number of articles from 'source'
+        order is optional, default: latest
+        """
+        from .constants import NEWS_URL
+        
+        order = f'&sortBy={order}' if order is not None else ''
+        
+        url = f'{NEWS_URL}articles?source={source}{order}&apiKey={self.key}'
+
+        data = r.get(url).json()
+        
+        if data['status'] == 'error':
+            raise ValueError(data['message'])
+        
+        count = min(count, len(data['articles']))
+        
+        return data['articles'][:count]
+
+    def get_sources(self, count, category=None, language=None, country=None):
+        """
+        Fetches the mapping between the source codes and source names, according
+        to the params given
+        """
+        from .constants import NEWS_URL
+        if (category is not None and category not in ['bsns', 'entnt', 'gmg',\
+                                                      'gnrl', 'music', 'pltcs',\
+                                                      'scntr', 'sport', 'tech']):
+            raise BotChuckyError(f'Invalid category, choose from {self.categories}')
+        elif (category is not None):
+            category = f'category={self.categories[category]}'
+        else:
+            category = ''
+        
+        
+        if (language is not None and language not in ['en', 'de', 'fr']):
+            raise BotChuckyError(f'Invalid language, choose from {self.languages}')
+        elif (language is not None):
+            language= f'&language={language}'
+        else:
+            language= ''
+        
+        
+        if (country is not None and country not in ['au', 'de', 'gb', 'in', 'us']):
+            raise BotChuckyError(f'Invalid country, choose from {self.countries}')
+        elif (country is not None):
+            country = f'&country={country}'
+        else:
+            country = ''
+        
+        url = f'{NEWS_URL}sources?{category}{language}{country}'
+        print(url)
+        data = r.get(url).json()
+        
+        if(len(data['sources'])==0):
+            raise ValueError('Query doesn\'t match')
+        count = min(count, len(data['sources']))
+        
+        return data['sources'][:count]
+
+
+			
 class ChuckyCustomGenerator(Callable):
     """
     warnings:: Class not completed yet

@@ -1,17 +1,17 @@
 import requests as r
-
+import time
 from .constants import API_URL
 from .errors import BotChuckyInvalidToken, BotChuckyTokenError
 from .helpers import (FacebookData, SoundCloudData,
                       StackExchangeData, TwitterData,
-                      WeatherData)
+                      WeatherData, NewsData)
 
 
 class BotChucky:
     def __init__(self, token, open_weather_token=None,
                  tw_consumer_key=None, tw_consumer_secret=None,
                  tw_access_token_key=None, tw_access_token_secret=None,
-                 soundcloud_id=None):
+                 soundcloud_id=None, news_api_key=None):
         """
         :param token: Facebook Token, required
         :param open_weather_token: not required
@@ -30,6 +30,8 @@ class BotChucky:
         :param twitter: Instance of TwitterData class, default
         :param soundcloud_id: SoundCloud Access Token, not required
         :param stack: Instance of StackExchange class, not required
+        :param news_api_key: newsapi.org key, not required
+        :param news: Instance of NewsData class, default
         """
         self.token = token
         self.open_weather_token = open_weather_token
@@ -47,6 +49,7 @@ class BotChucky:
         self.soundcloud_id = soundcloud_id
         self.soundcloud = SoundCloudData(self.soundcloud_id)
         self.stack = StackExchangeData()
+        self.news = NewsData(news_api_key)
 
     def send_message(self, id_: str, text):
         """
@@ -172,3 +175,41 @@ class BotChucky:
                 return self.send_message(id_, msg)
         else:
             return self.send_message(id_, msg)
+	
+    def get_article(self, id_:str, source, count, order=None):
+        """
+        ## This function gets #count articles from 'source' sorted by 'order'
+        :param id_: facebook user id
+        :param source: Source of news article
+        :param: count: Number of articles to be sent
+        :order: latest, top, or popular
+        """
+        if(self.news.get_key() is None):
+            raise BotChuckyError("Articles are available only with the newsapi.org key")
+            
+        data = self.news.get_article(source, min(count, 10), order)
+        
+        for article in data:
+            message = f"\nBy {article['author']}\nTitle:{article['title']}\n"
+            message += f"Desc: {article['description']}\nRead more: {article['url']}"
+            print(self.send_message(id_, message[:min(len(message), 600)]))
+        
+    
+    def get_sources_list(self, id_:str, count, category=None, language=None, country=None):
+        """
+        :param id_: facebook user id
+        :param count: # of sources user wants to list
+        :param category: #Main category in which the source posts articles
+        :language: Understandable -> en, de or fr
+        :country: Country in which the source belongs
+        """
+        data = self.news.get_sources(min(count, 20), category, language, country)
+        
+        message = "Codes for sources:\n"
+        
+        for i in range(len(data)):
+            message += f"{i+1}. {data[i]['id']}: {data[i]['name']}\n"
+        
+        self.send_message(id_, message)
+    
+		
