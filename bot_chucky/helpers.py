@@ -215,7 +215,6 @@ class NewsData:
             'fr': 'frence',
         }
 
-
     def get_categories(self):
         """
         Returns the mapping between categories codes and their meaning
@@ -255,7 +254,7 @@ class NewsData:
 
         if data['status'] == 'error':
             raise ValueError(data['message'])
-        
+
         count = min(count, len(data['articles']))
 
         return data['articles'][:count]
@@ -266,8 +265,8 @@ class NewsData:
         to the params given
         """
         from .constants import NEWS_URL
-        if (category is not None and category not in ['bsns', 'entnt', 'gmg',\
-                                                      'gnrl', 'music', 'pltcs',\
+        if (category is not None and category not in ['bsns', 'entnt', 'gmg',
+                                                      'gnrl', 'music', 'pltcs',
                                                       'scntr', 'sport', 'tech']):
             raise BotChuckyError(f'Invalid category, choose from {self.categories}')
         elif (category is not None):
@@ -275,14 +274,12 @@ class NewsData:
         else:
             category = ''
 
-
         if (language is not None and language not in ['en', 'de', 'fr']):
             raise BotChuckyError(f'Invalid language, choose from {self.languages}')
         elif (language is not None):
-            language= f'&language={language}'
+            language = f'&language={language}'
         else:
-            language= ''
-
+            language = ''
 
         if (country is not None and country not in ['au', 'de', 'gb', 'in', 'us']):
             raise BotChuckyError(f'Invalid country, choose from {self.countries}')
@@ -295,7 +292,7 @@ class NewsData:
         print(url)
         data = r.get(url).json()
 
-        if(len(data['sources'])==0):
+        if(len(data['sources']) == 0):
             raise ValueError('Query doesn\'t match')
         count = min(count, len(data['sources']))
 

@@ -11,7 +11,9 @@ app = Flask(__name__)
 # Create an instance of Chucky object
 # If you want to send weather information
 # You need to set your Open Weather API key
-bot = BotChucky(token, open_weather_token='YOUR_OPEN_WEATHER_TOKEN', news_api_key='YOUR_NEWSAPI_KEY')
+bot = BotChucky(token,
+                open_weather_token='YOUR_OPEN_WEATHER_TOKEN',
+                news_api_key='YOUR_NEWSAPI_KEY')
 
 
 @app.route('/', methods=['GET'])
@@ -44,18 +46,22 @@ def handle_messages():
 
                     # Send stackoverflow questions
                     bot.send_stack_questions(sender_id, title=text)
-                    
+
+                    """
                     # Send List of News Sources
                     # Command : news list
-                    if(text[:9].lower()=='news list'):
+                    """
+                    if(text[:9].lower() == 'news list'):
                         bot.get_sources_list(sender_id, count=10, country="in")
-                    
-                    #Send 5 latest news articles from source
-                    #Command : news the-hindu
+
+                    """
+                    # Send 5 latest news articles from source
+                    # Command : news the-hindu
+                    """
                     if(text[:4].lower() == 'news'):
                         source = text[5:]
                         bot.get_article(sender_id, source, 5)
-                        
+
                 if event.get('delivery'):
                     pass
 

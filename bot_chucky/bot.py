@@ -193,9 +193,9 @@ class BotChucky:
             message += f"Desc: {article['description']}\nRead more: {article['url']}"
             print(self.send_message(id_, message[:min(len(message), 600)]))
 
-    def get_sources_list(self, id_: str, count, 
-                         category=None, 
-                         language=None, 
+    def get_sources_list(self, id_: str, count,
+                         category=None,
+                         language=None,
                          country=None):
         """
         :param id_: facebook user id
