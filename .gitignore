@@ -86,3 +86,7 @@ tests.py
 # docs
 docs/_build
 docs/_templates
+
+.tox
+
+bot_chucky.egg-info

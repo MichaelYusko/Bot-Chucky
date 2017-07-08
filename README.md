@@ -58,7 +58,6 @@ Examples
 Documentation
 =================================
  * http://bot-chucky.readthedocs.io/
- Note: not completed yet
 
 Contribution
 =================================

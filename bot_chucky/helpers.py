@@ -302,72 +302,58 @@ class NewsData:
 
 class ChuckyCustomGenerator(Callable):
     """
-    warnings:: Class not completed yet
-    description:: Class will allow to add customs unique words/functions,
-                  If user want to create own realization of the bot,
-                  he should use the CustomGenerator class.
-    future:: It will be imported into BotChucky class.
+       description:: Class will allow to add customs unique words/functions,
+                     If user want to create own realization of the bot,
+                     he should use the CustomGenerator class.
+       future:: It will be imported into BotChucky class.
+       :Example:
+             # first create custom functions
 
-    :Example:
-          # first create custom functions
-          def hello_python():
-            return 'Hello Python!'
+             def hello_python():
+               return 'Hello Python!'
 
-          def news_python():
-            return 'Python news!'
+             def news_python():
+               return 'Python news!'
 
-          my_config = {
-            '#Python': hello_python
-          }
+             my_config = {
+               '#Python': hello_python
+             }
 
-          # Create instance of ChuckyGenerator
-          bot = ChuckyCustomGenerator()
-          bot.config = my_config
+             # Create instance of ChuckyGenerator
+             bot = ChuckyCustomGenerator()
+             bot.config = my_config
 
-          # If we get some text from messenger
-          # And we pass an argument to the bot
+             # If we get some text from messenger
+             # And we pass an argument to the bot
 
-          my_message = 'Hello I want to learn #Python'
-          bot(my_message)
+             my_message = 'Hello I want to learn #Python'
+             bot(my_message)
 
-          The bot will return the result of a custom function: 'Hello Python!'
+             # The bot will return the result of a custom function: 'Hello Python!'
+             # Update our config, and add topics:
+             # Add topics
+             # For example
+             # If we got text with #Python and 'bye' word
 
-          Update our config, and add topics:
+             my_config = {
+               '#Python': {'news': news_python}
+              }
 
-          # Add topics
-          # For example
-          # If we got text with #Python and 'bye' word
-          my_config = {
-            '#Python': {'news': news_python}
-           }
-          bot.config = my_config
-
-          my_message = 'Hey #Python, and send me your news'
-          bot(my_message)
-
-          bot will return the result of a custom function: 'Python news!'
-    """
+             bot.config = my_config
+             my_message = 'Hey #Python, and send me your news'
+             bot(my_message)
+             # bot will return the result of a custom function: 'Python news!'
+       """
     config = {}
 
     def get_text(self, text: str):
-        """
-        :param text: Some text, type -> str
-        :return: an array with words
-        """
         return split_text(text)
 
     @property
     def config_keys(self):
-        """
-        :return: self.config object
-        """
         return self.config.keys()
 
     def check_and_run(self, text: str):
-        """
-        :param text: Some text, type -> str
-        :return: Function which match with config[key].
-        """
         func = None
         for key in self.config_keys:
             if key not in text:
