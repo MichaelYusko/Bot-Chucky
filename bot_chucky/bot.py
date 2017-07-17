@@ -3,7 +3,8 @@ from .constants import API_URL
 from .errors import BotChuckyInvalidToken, BotChuckyTokenError
 from .helpers import (FacebookData, SoundCloudData,
                       StackExchangeData, TwitterData,
-                      WeatherData, NewsData)
+                      WeatherData, NewsData,
+                      DictionaryData,)
 
 
 class BotChucky:
@@ -49,6 +50,7 @@ class BotChucky:
         self.soundcloud = SoundCloudData(self.soundcloud_id)
         self.stack = StackExchangeData()
         self.news = NewsData(news_api_key)
+        self.dictionary = DictionaryData()
 
     def send_message(self, id_: str, text):
         """
@@ -217,5 +219,21 @@ class BotChucky:
 
         for i in range(len(data)):
             message += f"{i+1}. {data[i]['id']}: {data[i]['name']}\n"
+
+        self.send_message(id_, message)
+
+    def get_definition(self, id_: str, word: str):
+        """
+        :param id_: facebook user id
+        :param word: query word whose definitions are to be found
+        """
+        data = self.dictionary.get_meaning(word)
+
+        message = ''
+        for index, definition in enumerate(data):
+            message += f'{index+1}) {definition}\n'
+
+        if not data:
+            message = f'Couldn\'t find definition for {word}'
 
         self.send_message(id_, message)
