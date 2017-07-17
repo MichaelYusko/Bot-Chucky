@@ -3,7 +3,8 @@ from .constants import API_URL
 from .errors import BotChuckyInvalidToken, BotChuckyTokenError
 from .helpers import (FacebookData, SoundCloudData,
                       StackExchangeData, TwitterData,
-                      WeatherData, NewsData)
+                      WeatherData, NewsData,
+                      DictionaryData,)
 
 
 class BotChucky:
@@ -49,6 +50,7 @@ class BotChucky:
         self.soundcloud = SoundCloudData(self.soundcloud_id)
         self.stack = StackExchangeData()
         self.news = NewsData(news_api_key)
+        self.dictionary = DictionaryData()
 
     def send_message(self, id_: str, text):
         """
@@ -175,7 +177,7 @@ class BotChucky:
         else:
             return self.send_message(id_, msg)
 
-    def get_article(self, id_: str, source, count, order=None):
+    def send_article(self, id_: str, source, count, order=None):
         """
         ## This function gets #count articles from 'source' sorted by 'order'
         :param id_: facebook user id
@@ -197,11 +199,11 @@ class BotChucky:
             message += f"Read more: {article['url']}"
             self.send_message(id_, message)
 
-    def get_sources_list(self, id_: str,
-                         count,
-                         category=None,
-                         language=None,
-                         country=None):
+    def send_sources_list(self, id_: str,
+                          count,
+                          category=None,
+                          language=None,
+                          country=None):
         """
         :param id_: facebook user id
         :param count: # of sources user wants to list
@@ -217,5 +219,21 @@ class BotChucky:
 
         for i in range(len(data)):
             message += f"{i+1}. {data[i]['id']}: {data[i]['name']}\n"
+
+        self.send_message(id_, message)
+
+    def send_definition(self, id_: str, word: str):
+        """
+        :param id_: facebook user id
+        :param word: query word whose definitions are to be found
+        """
+        data = self.dictionary.get_meaning(word)
+
+        message = ''
+        for index, definition in enumerate(data):
+            message += f'{index+1}) {definition}\n'
+
+        if not data:
+            message = f'Couldn\'t find definition for {word}'
 
         self.send_message(id_, message)
