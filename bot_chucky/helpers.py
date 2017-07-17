@@ -7,7 +7,6 @@ import facebook
 import requests as r
 import soundcloud
 import twitter
-
 from bs4 import BeautifulSoup as bs
 
 from bot_chucky.errors import BotChuckyError
