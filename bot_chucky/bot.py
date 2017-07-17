@@ -177,7 +177,7 @@ class BotChucky:
         else:
             return self.send_message(id_, msg)
 
-    def get_article(self, id_: str, source, count, order=None):
+    def send_article(self, id_: str, source, count, order=None):
         """
         ## This function gets #count articles from 'source' sorted by 'order'
         :param id_: facebook user id
@@ -199,7 +199,7 @@ class BotChucky:
             message += f"Read more: {article['url']}"
             self.send_message(id_, message)
 
-    def get_sources_list(self, id_: str,
+    def send_sources_list(self, id_: str,
                          count,
                          category=None,
                          language=None,
@@ -222,7 +222,7 @@ class BotChucky:
 
         self.send_message(id_, message)
 
-    def get_definition(self, id_: str, word: str):
+    def send_definition(self, id_: str, word: str):
         """
         :param id_: facebook user id
         :param word: query word whose definitions are to be found

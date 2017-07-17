@@ -52,7 +52,7 @@ def handle_messages():
                     # Command: news list
                     """
                     if text[:9].lower() == 'news list':
-                        bot.get_sources_list(sender_id, count=10, country="in")
+                        bot.send_sources_list(sender_id, count=10, country="in")
 
                     """
                     # Send 5 latest news articles from source
@@ -60,7 +60,7 @@ def handle_messages():
                     """
                     if text[:4].lower() == 'news':
                         source = text[5:]
-                        bot.get_article(sender_id, source, 5)
+                        bot.send_article(sender_id, source, 5)
 
                     """
                     # Send definitions of query word
@@ -68,7 +68,7 @@ def handle_messages():
                     # Command: define stereotype
                     """
                     if text[:6] == 'define':
-                        bot.get_definition(sender_id, text[7:])
+                        bot.send_definition(sender_id, text[7:])
 
                 if event.get('delivery'):
                     pass
