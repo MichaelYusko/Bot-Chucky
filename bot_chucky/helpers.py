@@ -328,7 +328,7 @@ class DictionaryData:
         page = self.session.get(self._url.format(word))
 
         parsed_page = bs(page.text, 'html.parser')
-        divs = parsed_page.find_all('div', {'class':'def-set'})[:3]
+        divs = parsed_page.find_all('div', {'class': 'def-set'})[:3]
         data = []
 
         for div in divs:
