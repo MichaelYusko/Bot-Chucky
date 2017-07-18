@@ -49,8 +49,8 @@ Chucky provides:
 
  * Search for definitions of a word  
 
-    ![found_definitions](https://user-images.githubusercontent.com/15676805/28264397-6511fd84-6b08-11e7-95f7-068049c0c61f.PNG)
-	![not_found](https://user-images.githubusercontent.com/15676805/28264398-657e9b7e-6b08-11e7-8328-9d1a6b23dcca.PNG)  
+    <img src="https://user-images.githubusercontent.com/15676805/28264397-6511fd84-6b08-11e7-95f7-068049c0c61f.PNG" width=400 />
+    <img src="https://user-images.githubusercontent.com/15676805/28264398-657e9b7e-6b08-11e7-8328-9d1a6b23dcca.PNG" width=400 /> 
 
 the list will be expanded.
 
