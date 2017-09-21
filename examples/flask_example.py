@@ -49,18 +49,26 @@ def handle_messages():
 
                     """
                     # Send List of News Sources
-                    # Command : news list
+                    # Command: news list
                     """
                     if text[:9].lower() == 'news list':
-                        bot.get_sources_list(sender_id, count=10, country="in")
+                        bot.send_sources_list(sender_id, count=10, country="in")
 
                     """
                     # Send 5 latest news articles from source
-                    # Command : news the-hindu
+                    # Command: news the-hindu
                     """
                     if text[:4].lower() == 'news':
                         source = text[5:]
-                        bot.get_article(sender_id, source, 5)
+                        bot.send_article(sender_id, source, 5)
+
+                    """
+                    # Send definitions of query word
+                    # If not found send, not found message
+                    # Command: define stereotype
+                    """
+                    if text[:6] == 'define':
+                        bot.send_definition(sender_id, text[7:])
 
                 if event.get('delivery'):
                     pass

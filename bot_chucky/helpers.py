@@ -7,6 +7,7 @@ import facebook
 import requests as r
 import soundcloud
 import twitter
+from bs4 import BeautifulSoup as bs
 
 from bot_chucky.errors import BotChuckyError
 from bot_chucky.utils import split_text
@@ -292,12 +293,49 @@ class NewsData:
 
         data = r.get(url).json()
 
-        if len(data['sources']) == 0:
+        if not len(data['sources']):
             raise ValueError('Query doesn\'t match')
 
         count = min(count, len(data['sources']))
 
-        return data['sources'][: count]
+        return data['sources'][:count]
+
+
+class DictionaryData:
+    """
+        class to gather definitions of a query word.
+    """
+    def __init__(self):
+        self._url = 'http://www.dictionary.com/browse/{}?s=t'
+        self.session = r.session()
+        self.update_headers()
+
+    def update_headers(self):
+        """
+            update headers for web_scraping.
+        """
+        self.session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36'
+            '(KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36',
+        })
+
+    def get_meaning(self, word: str):
+        """
+            Scrape the www.dictionary.com to find definitions
+            of query word!
+        """
+        page = self.session.get(self._url.format(word))
+
+        parsed_page = bs(page.text, 'html.parser')
+        divs = parsed_page.find_all('div', {'class': 'def-set'})[:3]
+        data = []
+
+        for div in divs:
+            extracted_string = div.get_text().strip().split('\n')[-1]
+            extracted_string = extracted_string.strip()
+            data.append(extracted_string)
+
+        return data
 
 
 class ChuckyCustomGenerator(Callable):
