@@ -20,7 +20,13 @@ setup_kwargs = {
     ],
  }
 
-requirements = ['requests==2.17.3', 'facebook-sdk==2.0.0']
+requirements = [
+    'requests==2.17.3',
+    'facebook-sdk==2.0.0',
+    'soundcloud==0.5.0',
+    'python-twitter==3.3',
+]
+
 setup_kwargs['install_requires'] = requirements
 
 setup(**setup_kwargs)
