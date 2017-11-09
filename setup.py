@@ -25,6 +25,7 @@ requirements = [
     'facebook-sdk==2.0.0',
     'soundcloud==0.5.0',
     'python-twitter==3.3',
+    'bs4==0.0.1'
 ]
 
 setup_kwargs['install_requires'] = requirements
