@@ -1,14 +1,15 @@
 import bot_chucky
 from setuptools import setup
 
-version = bot_chucky.__version__
+VERSION = bot_chucky.__version__
+AUTHOR = bot_chucky.__author__
 
 setup_kwargs = {
     'name': 'bot_chucky',
-    'version': version,
+    'version': VERSION,
     'url': 'https://github.com/MichaelYusko/Bot-Chucky',
     'license': 'MIT',
-    'author': 'Frozen Monkey',
+    'author': AUTHOR,
     'author_email': 'freshjelly12@yahoo.com',
     'description': 'Python bot which able to work with messenger of facebook',
     'packages': ['bot_chucky'],
@@ -33,4 +34,4 @@ setup_kwargs['install_requires'] = requirements
 setup(**setup_kwargs)
 
 print(u"\n\n\t\t    "
-      "BotChucky version {} installation succeeded.\n".format(version))
+      "BotChucky version {} installation succeeded.\n".format(VERSION))
