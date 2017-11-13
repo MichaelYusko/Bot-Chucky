@@ -426,3 +426,8 @@ class ChuckyCustomGenerator(Callable):
     def __str__(self):
         return f'{self.__class__.__name__}' \
                f'(Your config: {self.config})'
+
+
+class PyBites:
+    """Class for PyBites integration"""
+    pass
